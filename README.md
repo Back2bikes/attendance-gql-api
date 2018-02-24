@@ -13,6 +13,9 @@ The benefits of this approach are:
 4) npm start (starts the server)
 5) Point your browser to http://localhost:3000/ for the GraphiQL interface to run queries and mutations from a browser
 
+# Docker
+```docker build -t b2bikes-api-img .```
+```docker run -it --rm --name b2bikes-gql-api b2bikes-api-img```
 # To Do:
 - Finalise docker set up so this can be containerised and deployed independently
 - Use deprecate the use of hard coded mlabs instance of mongo and use environment variables for point to a desired (and supported) instance of mongoDB

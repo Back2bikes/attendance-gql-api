@@ -14,10 +14,12 @@ The benefits of this approach are:
 5) Point your browser to http://localhost:3000/ for the GraphiQL interface to run queries and mutations from a browser
 
 # Docker
-```docker build -t b2bikes-api-img .
+```
+docker build -t b2bikes-api-img .
 ```
 
-```docker run -it --rm --name b2bikes-gql-api b2bikes-api-img
+```
+docker run -it --rm --name b2bikes-gql-api b2bikes-api-img
 ```
 
 # To Do:

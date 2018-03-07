@@ -1,8 +1,12 @@
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLInt, GraphQLList } = require('graphql') 
+const GraphQLDate = require('graphql-custom-datetype')
+
 const PersonType = require('./person_type')
+const AttendHistoryType = require('./attend_history_type')
 
 const mongoose = require('mongoose')
 const Person = mongoose.model('person')
+const AttendHistory = mongoose.model('attend-history')
 const suga = require('sugar')
  
 const RootQueryType = new GraphQLObjectType({
@@ -38,7 +42,20 @@ const RootQueryType = new GraphQLObjectType({
         return Person.find({isCheckedIn: false})
       }
     },
+    attendances: {
+      type:  new GraphQLList(AttendHistoryType),
+      args: {
+        id: {type: GraphQLID},
+        date: {type: GraphQLDate},
+      },
+      resolve(parentValue, {id, date}, req) {
+        const findClause = {}
+        if (id) findClause.id = id
+        if (date) findClause.lastAttend = date
+        return AttendHistory.find(findClause)
+      }
+    },
   }
 })
 
-module.exports = RootQueryType;
+module.exports = RootQueryType

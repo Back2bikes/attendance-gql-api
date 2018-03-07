@@ -1,9 +1,11 @@
 const graphql = require('graphql')
 const PersonType = require('./types/person_type')
+const AttendHistroy = require('./types/attend_history_type')
 const suga = require('sugar')
 
 const mongoose = require('mongoose')
 const Person = mongoose.model('person')
+const AttendHistory = mongoose.model('attend-history')
  
 const {
   GraphQLObjectType,
@@ -11,6 +13,7 @@ const {
   GraphQLInt,
   GraphQLID
 } = graphql
+const GraphQLDate = require('graphql-custom-datetype')
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation', 
@@ -59,8 +62,13 @@ const mutation = new GraphQLObjectType({
       },
       resolve(parentValue, args, req) {
         return Person.findById(args.id).then(p => {
-          p.lastAttend = suga.Date.create('yesterday')
-          p.isCheckedIn = true;
+          p.lastAttend = suga.Date.create('today')
+          p.isCheckedIn = true
+
+          new AttendHistory(
+            {attendee_id: p.id, name: p.name, surname: p.surname, avatar: p.avatar, lastAttend: p.lastAttend, duration: 1}
+          ).save()
+
           return p.save()
         })
       }
@@ -72,7 +80,7 @@ const mutation = new GraphQLObjectType({
       },
       resolve(parentValue, args, req) {
         return Person.findById(args.id).then(p => {
-          p.isCheckedIn = false;
+          p.isCheckedIn = false
           return p.save()
         })
       }

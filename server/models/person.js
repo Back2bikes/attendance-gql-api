@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 // Every b2b person has the following:
 const PersonSchema = new Schema({
@@ -10,4 +10,4 @@ const PersonSchema = new Schema({
   isCheckedIn: Boolean
 });
 
-mongoose.model('person', PersonSchema);
+mongoose.model('person', PersonSchema)

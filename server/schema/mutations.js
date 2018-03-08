@@ -1,6 +1,7 @@
 const graphql = require('graphql')
 const PersonType = require('./types/person_type')
-const AttendHistroy = require('./types/attend_history_type')
+const AttendHistroyType = require('./types/attend_history_type')
+const ResponseType = require('./types/response_type')
 const suga = require('sugar')
 
 const mongoose = require('mongoose')
@@ -83,6 +84,15 @@ const mutation = new GraphQLObjectType({
           p.isCheckedIn = false
           return p.save()
         })
+      }
+    },
+    resetCheckIns: {
+      type: ResponseType,
+      args: {},
+      resolve(parentValue, args, req) {
+        // Comment.update({ _id: id }, { $set: { text: 'changed' }}).exec()
+        Person.update({isCheckedIn: true}, { $set: { isCheckedIn: false}}).exec()
+        return {response: 'done'}
       }
     },
   },

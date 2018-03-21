@@ -7,8 +7,11 @@ const schema = require('./schema/schema')
 
 // Replace with your mongoLab URI
 // const MONGO_URI = 'mongodb://admin:admin@ds127260.mlab.com:27260/lyrics-db'
-const MONGO_URI = 'mongodb://dbadmin:dbadmin@ds145438.mlab.com:45438/b2bikes-db'
-
+// const MONGO_URI = 'mongodb://dbadmin:dbadmin@ds145438.mlab.com:45438/b2bikes-db'
+// console.log(process.env)
+const { MONGO_URI } = process.env
+console.log("uri : " + MONGO_URI)
+console.log("env vars : " + process.env)
 // Mongoose's built in promise library is deprecated, replace it with ES2015 Promise
 mongoose.Promise = global.Promise
 

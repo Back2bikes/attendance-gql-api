@@ -1,5 +1,8 @@
 FROM node:alpine
 
+# Set up environment variablkes 
+# ENV MONGO_URI="mongodb://localhost:32771/b2bikes-db"
+
 # Create app directory
 WORKDIR /usr/src/app
 

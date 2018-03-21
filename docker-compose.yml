@@ -1,0 +1,16 @@
+version: '2'
+services:
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mounts/data/db:/data/db
+  web:
+    image: b2bikes-api-img
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      MONGO_URI: "mongodb://db:27017/b2bikes-db"

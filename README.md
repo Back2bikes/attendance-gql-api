@@ -16,7 +16,8 @@ The benefits of this approach are:
 # Docker build commands
 ```
 docker build -t b2bikes-api-img .
-docker run -it --name b2bikes-gql-api b2bikes-api-img
+docker-compose up -d
+docker-compose down
 ```
 
 # To Do:

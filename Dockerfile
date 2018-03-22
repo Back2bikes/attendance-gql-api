@@ -1,7 +1,7 @@
 FROM node:alpine
 
-# Set up environment variablkes 
-# ENV MONGO_URI="mongodb://localhost:32771/b2bikes-db"
+# Install bash so we can run wait-for-it
+RUN apk update && apk add bash
 
 # Create app directory
 WORKDIR /usr/src/app

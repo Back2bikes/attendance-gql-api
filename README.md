@@ -17,13 +17,7 @@ The benefits of this approach are:
 # Docker set up and commands
 If you would like to run dev / staging using docker use the following commands:
 
-This will create a docker image of the api server for later use by docker-compose.
-NOTE: For now you will have to do this every time you need to relaung the app with your latest changes. This will change in the next update (see the To Do's)
-```
-docker build -t b2bikes-api-img .
-```
-
-This will launch the mongodb and api docker services.
+This will build / launch the mongodb and api docker services.
 ```
 docker-compose up -d
 ```
@@ -40,5 +34,4 @@ docker-compose down
 ```
 
 # To Do:
-- Configure docker-compose.yml to build the app based on a repository instead of relyying on on a manually (prebuilt) docker image
 - Look into setting up test cases for the GQL API

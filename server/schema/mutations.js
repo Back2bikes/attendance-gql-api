@@ -12,7 +12,8 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
-  GraphQLID
+  GraphQLID,
+  GraphQLBoolean
 } = graphql
 const GraphQLDate = require('graphql-custom-datetype')
 
@@ -27,7 +28,7 @@ const mutation = new GraphQLObjectType({
         avatar: {type: GraphQLString},
       },
       resolve(parentValue, {name, surname, avatar} , req) {
-        return (new Person({name, surname, avatar, lastAttend: suga.Date.create('yesterday')}).save() )
+        return (new Person({name, surname, avatar, lastAttend: suga.Date.create('yesterday'), isCheckedIn: false} ).save() )
       }
     },
     removePerson: {
@@ -46,12 +47,14 @@ const mutation = new GraphQLObjectType({
         name: {type: GraphQLString},
         surname: {type: GraphQLString},
         avatar: {type: GraphQLString},
+        isCheckedIn: {type: GraphQLBoolean}
       },
       resolve(parentValue, args , req) {
         return Person.findById(args.id).then(p => {
           p.name = (args.name) ? args.name : p.name
           p.surname = (args.surname) ? args.surname : p.surname
-          p.avatar= (args.avatar) ? args.avatar : p.avatar
+          p.avatar = (args.avatar) ? args.avatar : p.avatar
+          p.isCheckedIn = (args.isCheckedIn) ? args.isCheckedIn : p.isCheckedIn
           return p.save()
         })
       }

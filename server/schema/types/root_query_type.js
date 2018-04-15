@@ -1,4 +1,11 @@
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLInt, GraphQLList } = require('graphql') 
+const { 
+  GraphQLObjectType, 
+  GraphQLID, 
+  GraphQLString, 
+  GraphQLInt, 
+  GraphQLList, 
+  GraphQLBoolean
+} = require('graphql') 
 const GraphQLDate = require('graphql-custom-datetype')
 
 const PersonType = require('./person_type')
@@ -23,9 +30,19 @@ const RootQueryType = new GraphQLObjectType({
     },
     people: {
       type:  new GraphQLList(PersonType),
-      args: {},
-      resolve(parentValue, args, req) {
-        return Person.find({})
+      args: {
+        isCheckedIn: {type: GraphQLBoolean},
+        searchTerm: {type: GraphQLString}
+      },
+      resolve(parentValue, {isCheckedIn, searchTerm}, req) {
+        const findClause = {}
+        if (isCheckedIn) findClause.isCheckedIn = isCheckedIn
+        if (searchTerm) {
+          let regexText = new RegExp(searchTerm)
+          findClause.name = regexText
+          findClause.surname = regexText
+        }
+        return Person.find(findClause)
       }
     },
     checkedIn: {

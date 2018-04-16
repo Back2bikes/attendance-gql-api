@@ -34,13 +34,28 @@ const RootQueryType = new GraphQLObjectType({
         isCheckedIn: {type: GraphQLBoolean},
         searchTerm: {type: GraphQLString}
       },
-      resolve(parentValue, {isCheckedIn, searchTerm}, req) {
+      resolve(parentValue, args, req) {
         const findClause = {}
-        if (isCheckedIn) findClause.isCheckedIn = isCheckedIn
-        if (searchTerm) {
-          let regexText = new RegExp(searchTerm)
-          findClause.name = regexText
-          findClause.surname = regexText
+        if ('isCheckedIn' in args) findClause.isCheckedIn = args.isCheckedIn
+        if ('searchTerm' in args) {
+          let $or = [
+            {name: new RegExp(args.searchTerm, 'i')},
+            {surname: new RegExp(args.searchTerm, 'i')}
+          ]
+          if ('isCheckedIn' in args ) {
+            let $and = [{$or: [
+              {name: new RegExp(args.searchTerm, 'i')},
+              {surname: new RegExp(args.searchTerm, 'i')}
+              ]}
+            ]
+            findClause.$and = $and
+          } else {
+            let $or = [
+              {name: new RegExp(args.searchTerm, 'i')},
+              {surname: new RegExp(args.searchTerm, 'i')}
+            ]
+            findClause.$or = $or
+          }
         }
         return Person.find(findClause)
       }

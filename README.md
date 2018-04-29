@@ -1,4 +1,6 @@
-# attendance-gql-api
+# attendance-gql-api DEPRECATED
+This server api has been moved into https://github.com/back2bikes/attandance
+
 This is essentially a fork of the GraphQL/React project https://github.com/Back2bikes/b2b-gql-react that splits out the GraphQL server functionality of that project.
 
 The benefits of this approach are:
